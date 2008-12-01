@@ -1,6 +1,6 @@
 use strict;
 
-use Test::More tests => 21;
+use Test::More tests => 22;
 
 use Music::Chord::Note;
 
@@ -42,6 +42,7 @@ my %testchords = (
     'C#'     => 'C# F G#',
     'F'      => 'F A C',
     'B'      => 'B D# F#',
+    'Bm13'   => 'B D F# A C# E G#',
 );
 
 foreach my $c (sort keys %testchords){
