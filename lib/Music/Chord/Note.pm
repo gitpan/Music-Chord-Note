@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp qw( croak );
 
-our $VERSION = '0.0.2';
+our $VERSION = '0.0.3';
 
 my @tone_list = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
                  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
@@ -78,26 +78,43 @@ my $scalic_value = {
     'Cb' => 11, 'B#' => 0, # joke!
 };
 
-sub new {
+sub new
+{
     my $class = shift;
     bless {}, $class;
 }
 
-sub chord {
+sub chord
+{
     my ($self, $chord_name) = @_;
+
     croak "No CHORD_NAME!" unless $chord_name;
     my ($tonic, $kind) = ($chord_name =~ /([A-G][b#]?)(.+)?/);
-    croak("unknown chord $chord_name") unless defined $tonic;
+    croak "unknown chord $chord_name" unless defined $tonic;
     $kind = 'base' unless $kind;
     my $scalic = $scalic_value->{$tonic};
-    croak("undefined kind of chord $kind($chord_name)") unless defined $base_chord_list->{$kind};
+    croak "undefined kind of chord $kind($chord_name)"
+        unless defined $base_chord_list->{$kind};
+
     my @keys;
-    for my $scale ( split(/\,/, $base_chord_list->{$kind}) ){
+    for my $scale ( split /\,/, $base_chord_list->{$kind} ){
         my $note = $scale + $scalic;
         $note = int($note % 24) + 12 if $note > 23;
-        push(@keys, $tone_list[$note]);
+        push @keys, $tone_list[$note];
     }
+
     return @keys;
+}
+
+sub scale
+{
+    my $self = shift;
+    my $note = shift || return;
+
+    $note =~ s/^([a-g])/uc($1)/e;
+    croak "wrong note ($note)" if $note !~ /^[A-G](?:[#b])?$/;
+
+    return $scalic_value->{$note};
 }
 
 1;
@@ -120,6 +137,10 @@ Music::Chord::Note - get Chord Tone List from Chord Name
 
     print "@tone"; # C E G B
 
+    my $note = $cn->scale('D#');
+
+    print "$note"; # 3
+
 
 =head1 METHOD
 
@@ -132,6 +153,10 @@ constructor
 =item chord($chord_name)
 
 get tone list from chord name
+
+=item scale($note)
+
+get scalic value from C (C=0, B=11)
 
 =back
 

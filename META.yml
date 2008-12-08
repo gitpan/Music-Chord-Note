@@ -1,6 +1,6 @@
 ---
 name: Music-Chord-Note
-version: 0.0.2
+version: 0.0.3
 author:
   - 'Dai Okabayashi <bayashi@cpan.org>'
 abstract: get Chord Tone List from Chord Name
@@ -13,7 +13,7 @@ requires:
 provides:
   Music::Chord::Note:
     file: lib/Music/Chord/Note.pm
-    version: 0.0.2
+    version: 0.0.3
 generated_by: Module::Build version 0.3
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

@@ -1,6 +1,6 @@
 use strict;
 
-use Test::More tests => 22;
+use Test::More tests => 31;
 
 use Music::Chord::Note;
 
@@ -51,4 +51,29 @@ foreach my $c (sort keys %testchords){
 }
 
 
+my $no_note = $cn->scale('');
+is($no_note, undef, "No Note");
 
+eval { my $wrong_note = $cn->scale('H'); };
+like($@, qr/wrong note/, "Wrong Note H");
+
+eval { my $wrong_note = $cn->scale('C+'); };
+like($@, qr/wrong note/, "Wrong Note C+");
+
+eval { my $wrong_note = $cn->scale('D-'); };
+like($@, qr/wrong note/, "Wrong Note D-");
+
+my $sv = $cn->scale('C');
+is($sv, 0, 'Scalic Value C');
+
+my $sv1 = $cn->scale('A');
+is($sv1, 9, 'Scalic Value A');
+
+my $sv2 = $cn->scale('A#');
+is($sv2, 10, 'Scalic Value A#');
+
+my $sv3 = $cn->scale('Eb');
+is($sv3, 3, 'Scalic Value Eb');
+
+my $sv4 = $cn->scale('gb');
+is($sv4, 6, 'Scalic Value gb');
