@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp qw( croak );
 
-our $VERSION = '0.0.3';
+our $VERSION = '0.0.4';
 
 my @tone_list = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
                  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
@@ -109,7 +109,7 @@ sub chord
 sub scale
 {
     my $self = shift;
-    my $note = shift || return;
+    my $note = shift;
 
     $note =~ s/^([a-g])/uc($1)/e;
     croak "wrong note ($note)" if $note !~ /^[A-G](?:[#b])?$/;

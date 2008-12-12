@@ -51,8 +51,8 @@ foreach my $c (sort keys %testchords){
 }
 
 
-my $no_note = $cn->scale('');
-is($no_note, undef, "No Note");
+eval { my $no_note = $cn->scale(''); };
+like($@, qr/wrong note/, "No Note");
 
 eval { my $wrong_note = $cn->scale('H'); };
 like($@, qr/wrong note/, "Wrong Note H");
