@@ -1,6 +1,6 @@
 use strict;
 
-use Test::More tests => 31;
+use Test::More tests => 35;
 
 use Music::Chord::Note;
 
@@ -77,3 +77,18 @@ is($sv3, 3, 'Scalic Value Eb');
 
 my $sv4 = $cn->scale('gb');
 is($sv4, 6, 'Scalic Value gb');
+
+
+eval { my @fail = $cn->chord_num('H'); };
+like($@, qr/undefined kind of chord/, "undefined kind of chord:chord_num");
+
+my @Kind = $cn->chord_num('');
+is("0 4 7", "@Kind", 'nothing:chord_num');
+
+my @Kind2 = $cn->chord_num('base');
+is("0 4 7", "@Kind2", 'base:chord_num');
+
+my @Kind3 = $cn->chord_num('m7');
+is("0 3 7 10", "@Kind3", 'chord_num:m7');
+
+

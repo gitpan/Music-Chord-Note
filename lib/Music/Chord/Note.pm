@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp qw( croak );
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 my @tone_list = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
                  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
@@ -106,6 +106,16 @@ sub chord
     return @keys;
 }
 
+sub chord_num
+{
+    my ($self, $chord) = @_;
+
+    $chord = 'base' unless $chord;
+    croak "undefined kind of chord ($chord)" unless defined $base_chord_list->{$chord};
+
+    return split /,/, $base_chord_list->{$chord};
+}
+
 sub scale
 {
     my $self = shift;
@@ -137,6 +147,10 @@ Music::Chord::Note - get Chord Tone List from Chord Name
 
     print "@tone"; # C E G B
 
+    my @tone_num = $cn->chord_num('M7');
+
+    print "@tone_num"; # 0 4 7 11
+
     my $note = $cn->scale('D#');
 
     print "$note"; # 3
@@ -153,6 +167,10 @@ constructor
 =item chord($chord_name)
 
 get tone list from chord name
+
+=item chord_num($kind_of_chord)
+
+get scalic value list(ex. M7 -> 0 4 7 11)
 
 =item scale($note)
 
