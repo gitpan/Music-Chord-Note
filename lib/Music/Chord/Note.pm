@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp qw( croak );
 
-our $VERSION = '0.0.5';
+our $VERSION = '0.0.6';
 
 my @tone_list = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B',
                  'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B');
@@ -127,6 +127,13 @@ sub scale
     return $scalic_value->{$note};
 }
 
+sub all_chords_list
+{
+    my $self = shift;
+
+    return [keys %{$base_chord_list}];
+}
+
 1;
 
 __END__
@@ -175,6 +182,10 @@ get scalic value list(ex. M7 -> 0 4 7 11)
 =item scale($note)
 
 get scalic value from C (C=0, B=11)
+
+=item all_chords_list
+
+get all chords list(ARRAY ref)
 
 =back
 

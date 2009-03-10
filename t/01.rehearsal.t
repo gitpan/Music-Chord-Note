@@ -1,6 +1,6 @@
 use strict;
 
-use Test::More tests => 35;
+use Test::More tests => 36;
 
 use Music::Chord::Note;
 
@@ -92,3 +92,5 @@ my @Kind3 = $cn->chord_num('m7');
 is("0 3 7 10", "@Kind3", 'chord_num:m7');
 
 
+my $all_chords_list = $cn->all_chords_list;
+is(65, $#{$all_chords_list}, 'number of all chords');
